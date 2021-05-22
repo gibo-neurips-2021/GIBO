@@ -1,0 +1,75 @@
+method: bga  # Bayesian gradient ascent.
+
+out_dir: './experiments/rl_experiments/halfcheetah/bga/'  # Directory for experiment results.
+
+environment_name: HalfCheetah-v1
+mlp:
+    layers: [17,6]
+    add_bias: True
+    state_normalization: True
+    manipulate_reward: 
+        shift: 
+        scale: 1000 # 500
+
+trials: 3
+# Either choose max_iterations or max_objective_calls unequal None.
+max_iterations:
+max_objective_calls: 12500
+
+optimizer_config: 
+    max_samples_per_iteration: 32 # 16
+    OptimizerTorch: sgd
+    optimizer_torch_config: 
+        lr: 1. # .5
+        weight_decay: 0.00001
+    lr_schedular: {0: 0.7, 2000: 0.6, 4000: 0.4} # None
+    Model: derivative_gp
+    model_config:
+        prior_mean: 0.
+        ard_num_dims: dim_search_space  # If not None, each input dimension gets its own separate lengthscale.
+        N_max: 128 # 64
+        lengthscale_constraint: 
+            constraint:
+            kwargs:
+        lengthscale_hyperprior: 
+            prior: uniform
+            kwargs: 
+                a: 0.01
+                b: 0.5
+        outputscale_constraint:
+            constraint: greather_than
+            kwargs: 
+                lower_bound: 0.001
+        outputscale_hyperprior:
+            prior: normal
+            kwargs: 
+                loc: 3. # 2.
+                scale: 1.
+        noise_constraint: 
+            constraint:
+            kwargs:
+        noise_hyperprior:
+            prior:
+            kwargs:
+    hyperparameter_config: 
+        optimize_hyperparameters: True
+        hypers:
+            covar_module.base_kernel.lengthscale:
+            covar_module.outputscale:
+            likelihood.noise: .02 # .01
+        no_noise_optimization: True
+    optimize_acqf: bga
+    optimize_acqf_config: 
+        q: 1
+        num_restarts: 5
+        raw_samples: 64
+    # Either choose bounds or delta unequal None.
+    bounds: 
+        lower_bound:
+        upper_bound:
+    delta: 0.2
+    epsilon_diff_acq_value: 0.001
+    generate_initial_data:
+    standard_deviation_scaling: False
+    normalize_gradient: True
+    verbose: True
