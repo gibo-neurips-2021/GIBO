@@ -1,11 +1,11 @@
-# Local policy search with Bayesian Optimization
+# Local policy search with Bayesian optimization
 The algorithms implemented in this repo can solve black-box optimization problems. 
 Black-box optimization refers to the general setup of optimizing an unknown function where only its evaluations are available. 
 
 We introduce a new method that enables us to employ local gradient methods for black-box optimization by active sampling for efficient gradient estimation in the Bayesian optimization framework.
 
 # Code of the repo
-- [optimizers](./src/optimizers.py): The optimizers implemented can be applied to black-box functions. Implemented are [random search](https://arxiv.org/abs/1803.07055), vanilla Bayesian optimization, CMA-ES and the proposed method Gradient informative Bayesian optimization (GIBO).
+- [optimizers](./src/optimizers.py): The optimizers implemented can be applied to black-box functions. Implemented are [random search](https://arxiv.org/abs/1803.07055), vanilla Bayesian optimization, CMA-ES and the proposed method Gradient Information with BO (GIBO).
 - [model](./src/model.py): A Gaussian process model with a squared-exponential kernel that also supplies the Jacobian.
 - [policy parameterization](./src/policy_parameterizations.py): Multilayer perceptrones as policy parameterization for solving reinforcement learning problems.
 - [environment api](./src/environment_api.py): Interface for interactions with reinforcement learning environments of OpenAI Gym.
@@ -56,7 +56,10 @@ python run_synthetic_experiment.py -c ./configs/synthetic_experiment/bga_default
 ```
 
 ### Evaluate
-Evaluation of the synthetic experiments and reproduction of the paper's figures can be done with the notebook [evaluation synthetic experiment](evaluation_synthetic_experiment.ipynb).
+Evaluation of the synthetic experiments and reproduction of the paper's figures can be done with the notebook [evaluation synthetic experiment](notebooks/evaluation_synthetic_experiment.ipynb).
+
+### Reproduce Paper Results
+To reproduce the results of the paper, use this [config files](/configs/synthetic_experiment/110620/).
 
 ## Reinforcement Learning
 ### Run
@@ -72,8 +75,11 @@ Create plot to compare rewards over function calls for different optimizers (in 
 ```
 python evaluation_rl_experiment.py -path path_to_image/image.pdf -cs ./configs/rl_experiment/bga_default.yaml ./configs/rl_experiment/rs_default.yaml 
 ```
-Or use the notebook [evaluation rl experiment](evaluation_rl_experiment.ipynb) to reproduce the figures of the paper.
+Or use the notebook [evaluation rl experiment](notebooks/evaluation_rl_experiment.ipynb) to reproduce the figures of the paper.
+
+### Reproduce Paper Results
+To reproduce the results of the paper, use the linked config files for [cartpole](/configs/rl_experiment/cartpole/), [swimmer](/configs/rl_experiment/swimmer/), and [hopper](/configs/rl_experiment/hopper/).
 
 ## Linear Quadratic Regulator
-To reproduce the results and plots of the paper run the code in the notebook [lqr_experiment](lqr_experiment.ipynb).
+To reproduce the results and plots of the paper run the code in the notebook [lqr_experiment](notebooks/lqr_experiment.ipynb).
 
