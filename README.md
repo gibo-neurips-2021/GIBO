@@ -59,7 +59,7 @@ python run_synthetic_experiment.py -c ./configs/synthetic_experiment/bga_default
 Evaluation of the synthetic experiments and reproduction of the paper's figures can be done with the notebook [evaluation synthetic experiment](notebooks/evaluation_synthetic_experiment.ipynb).
 
 ### Reproduce Paper Results
-To reproduce the results of the paper, use this [config files](/configs/synthetic_experiment/110620/).
+To reproduce the results of the paper use these [config files](/configs/synthetic_experiment/110620/).
 
 ## Reinforcement Learning
 ### Run
